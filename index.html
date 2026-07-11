@@ -137,16 +137,20 @@
   }
   .ca-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-2);font-weight:700;white-space:nowrap}
   .ca-value{
-    flex:1;min-width:0;font-size:13px;text-align:left;line-height:1.4;
-    word-break:break-all;overflow-wrap:anywhere;  /* full address always shows — wraps, never truncates */
+    flex:1;min-width:0;font-size:13px;text-align:left;
+    white-space:nowrap;overflow-x:auto;scrollbar-width:none;  /* one line, shrinks to fit — never breaks */
   }
+  .ca-value::-webkit-scrollbar{display:none}
   .ca button{
     border:0;background:var(--neon);color:#111110;font-weight:700;font-size:14px;
     padding:10px 18px;border-radius:999px;cursor:pointer;white-space:nowrap;
   }
   .ca button[disabled]{opacity:.45;cursor:default}
-  .slippage-note{margin:12px auto 0;max-width:560px;font-size:13.5px;color:var(--ink-2)}
-  .slippage-note b{color:var(--ink)}
+  .launch-tag{
+    display:inline-flex;align-items:center;margin-top:22px;
+    padding:7px 16px;border-radius:999px;background:var(--neon);color:#111110;
+    font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  }
   .limits{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
   .limits span{
     font-size:12.5px;color:var(--ink-2);background:var(--card);
@@ -234,7 +238,15 @@
     margin-top:22px;background:var(--card);border:1px solid var(--line);border-radius:12px;
     box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;padding:10px 10px 10px 16px;
   }
-  .treasury-ca .ca-value{flex:1;min-width:0;font-size:12.5px;line-height:1.4;word-break:break-all;overflow-wrap:anywhere}
+  .treasury-ca .ca-value{flex:1;min-width:0;font-size:12px;white-space:nowrap;overflow-x:auto;scrollbar-width:none}
+  .treasury-ca .ca-value::-webkit-scrollbar{display:none}
+  /* mobile: address gets its own full-width line and shrinks to fit — never breaks */
+  @media(max-width:520px){
+    .ca,.treasury-ca{flex-wrap:wrap;gap:8px}
+    .ca-label{order:1}
+    .ca button,.treasury-ca button{order:2;margin-left:auto}
+    .ca-value,.treasury-ca .ca-value{order:3;flex-basis:100%;text-align:center;font-size:clamp(10px,3.1vw,13px)}
+  }
   .treasury-ca button{
     border:0;background:var(--neon);color:#111110;font-weight:700;font-size:13px;
     padding:9px 16px;border-radius:999px;cursor:pointer;white-space:nowrap;
@@ -242,6 +254,35 @@
   @media(max-width:520px){
     .dist-list li{grid-template-columns:auto 1fr auto}
     .dist-pct{grid-column:3}
+  }
+
+  /* ---------- roadmap ---------- */
+  .roadmap{list-style:none;margin:28px 0 0;padding:0;position:relative}
+  .roadmap::before{content:"";position:absolute;left:16px;top:10px;bottom:26px;width:2px;background:var(--line)}
+  .roadmap li{position:relative;padding:0 0 26px 52px;min-height:34px}
+  .roadmap li:last-child{padding-bottom:0}
+  .roadmap .node{
+    position:absolute;left:5px;top:0;width:24px;height:24px;border-radius:50%;
+    border:2px solid var(--line);background:var(--bg);display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;color:var(--ink-2);z-index:1;
+  }
+  .roadmap li.done .node{background:var(--neon);border-color:var(--neon);color:#111110}
+  .roadmap li.active .node{border-color:var(--neon-ink);color:var(--neon-ink);animation:nodePulse 1.9s ease-out infinite}
+  @keyframes nodePulse{0%{box-shadow:0 0 0 0 rgba(120,165,0,.45)}100%{box-shadow:0 0 0 12px rgba(120,165,0,0)}}
+  .roadmap .rl-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .roadmap b{font-size:16px}
+  .roadmap li.upcoming b{color:var(--ink-2)}
+  .roadmap p{margin:3px 0 0;font-size:13.5px;color:var(--ink-2)}
+  .roadmap .status{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px}
+  .roadmap li.done .status{background:var(--neon);color:#111110}
+  .roadmap li.active .status{border:1px solid var(--neon-ink);color:var(--neon-ink)}
+  .roadmap li.upcoming .status{border:1px solid var(--line);color:var(--ink-2)}
+  /* scroll-reveal — enhancement only; if JS doesn't run, everything is visible */
+  .roadmap.anim li{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+  .roadmap.anim li.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    .roadmap.anim li{opacity:1;transform:none}
+    .roadmap li.active .node{animation:none}
   }
 
   /* ---------- guardrails & how-to ---------- */
@@ -313,10 +354,11 @@
       <span id="ca-value" class="ca-value mono">Deploying soon</span>
       <button id="ca-copy" type="button" disabled>Copy</button>
     </div>
-    <p class="slippage-note">Set slippage to <b>5–10%</b> when swapping — the 5% tax comes out of every trade.</p>
+    <span class="launch-tag">🚀 Launch mode · initial limits active</span>
     <div class="limits">
-      <span><b>Max buy</b> 10M · 1% of supply</span>
-      <span><b>Max wallet</b> 20M · 2% of supply</span>
+      <span><b>Max buy</b> 1%</span>
+      <span><b>Max wallet</b> 2%</span>
+      <span><b>Slippage</b> 5–10%</span>
     </div>
 
     <div class="socials">
@@ -462,6 +504,14 @@
       </li>
     </ol>
   </section>
+
+  <!-- ================= roadmap ================= -->
+  <section>
+    <p class="kicker">Roadmap</p>
+    <h2>The road to the moon 🌙</h2>
+    <p class="muted">Every step is a public, on-chain action — watch us tick them off.</p>
+    <ol class="roadmap" id="roadmap"></ol>
+  </section>
 </main>
 
 <!-- ================= footer ================= -->
@@ -553,6 +603,42 @@
     activate('proof-treasury', EXPLORER + '/address/' + TREASURY_WALLET, 'view wallet ↗');
     if (BURN_TX) activate('proof-burn', EXPLORER + '/tx/' + BURN_TX, 'view burn tx ↗');
     if (LP_TX)   activate('proof-lp',   EXPLORER + '/tx/' + LP_TX,   'view LP burn ↗');
+  })();
+
+  /* ---------- roadmap (edit STEPS + status to update the journey) ---------- */
+  (function(){
+    // status: 'done' | 'active' | 'upcoming'
+    const STEPS = [
+      { t:'Pre-launch',         s:'done',     d:'Contract deployed, verified & independently audited. Site and socials live.' },
+      { t:'Liquidity live',     s:'active',   d:'Pool seeded on Uniswap — trading opens with the initial launch limits.' },
+      { t:'Pay DEX',            s:'upcoming', d:'DexScreener enhanced info & boosts — logo, links, and a trending push.' },
+      { t:'Lock liquidity',     s:'upcoming', d:'LP tokens burned to the dead address — the pool can never be pulled.' },
+      { t:'Burn 50% supply',    s:'upcoming', d:'500,000,000 $MOONCAT sent to the dead address, gone forever.' },
+      { t:'Renounce ownership', s:'upcoming', d:'Owner set to zero — fees and limits frozen permanently.' },
+    ];
+    const ol = document.getElementById('roadmap');
+    if (!ol) return;
+    const LABEL = { done:'Done', active:'In progress', upcoming:'Soon' };
+    STEPS.forEach((step, i) => {
+      const li = document.createElement('li');
+      li.className = step.s;
+      const mark = step.s === 'done' ? '✓' : (i + 1);
+      li.innerHTML =
+        `<span class="node">${mark}</span>` +
+        `<span class="rl-head"><b>${step.t}</b><span class="status">${LABEL[step.s]}</span></span>` +
+        `<p>${step.d}</p>`;
+      ol.appendChild(li);
+    });
+    // scroll-reveal enhancement (base state is visible without JS)
+    if ('IntersectionObserver' in window) {
+      ol.classList.add('anim');
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.25 });
+      [...ol.children].forEach((li, i) => { li.style.transitionDelay = (i * 90) + 'ms'; io.observe(li); });
+    }
   })();
 
   /* ---------- tokenomics donut (generated, not hand-drawn) ---------- */
