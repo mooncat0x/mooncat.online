@@ -88,10 +88,26 @@
   }
   .burn-flame{font-size:.42em;vertical-align:.22em;margin-right:.12em;text-shadow:none}
   .burn-label{display:block;margin-top:18px;font-size:12px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-2)}
-  /* live-stats CTA (shown instead of the burn counter until more is burned) */
-  .stats-cta{display:block;margin:32px auto 0;max-width:420px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;text-align:center;box-shadow:var(--shadow);text-decoration:none;color:var(--ink);font-size:18px;font-weight:700;transition:transform .12s ease}
-  .stats-cta:active{transform:scale(.98)}
-  .stats-cta .sc-sub{display:block;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--neon-ink)}
+  /* live token stats (DexScreener API) — premium dashboard */
+  .live-stats{margin:34px 0 0;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px 30px 24px;box-shadow:var(--shadow),0 24px 60px rgba(0,0,0,.14)}
+  .ls-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 18px;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:22px}
+  .ls-price-wrap{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .ls-price{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:clamp(30px,7vw,52px);font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1;letter-spacing:-.01em}
+  .ls-chg{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+  .ls-chg.up{color:#5a9e2f} .ls-chg.down{color:#d0463a}
+  .ls-live{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);font-weight:700;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+  .ls-dot{width:8px;height:8px;border-radius:50%;background:#5a9e2f;box-shadow:0 0 0 0 rgba(90,158,47,.5);animation:lsPulse 1.9s ease-out infinite}
+  @keyframes lsPulse{0%{box-shadow:0 0 0 0 rgba(90,158,47,.5)}100%{box-shadow:0 0 0 9px rgba(90,158,47,0)}}
+  .ls-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .ls-tile{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:18px 14px;text-align:center}
+  .ls-lbl{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);font-weight:700}
+  .ls-val{display:block;margin-top:8px;font-size:clamp(17px,4vw,21px);font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .ls-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-top:24px}
+  .ll-badge{display:inline-flex;align-items:center;gap:6px;background:var(--neon);color:#111110;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:7px 15px;border-radius:999px}
+  .ls-more{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--neon-ink);text-decoration:none;white-space:nowrap}
+  .live-stats.ls-failed .ls-head,.live-stats.ls-failed .ls-grid{display:none}
+  .live-stats.ls-failed .ls-foot{margin-top:0;justify-content:center}
+  @media(max-width:560px){.ls-grid{grid-template-columns:1fr}.ls-head{justify-content:center;text-align:center}.ls-foot{justify-content:center}}
 
   /* challenge */
   .challenge-img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);margin:22px 0;box-shadow:var(--shadow)}
@@ -163,10 +179,24 @@
     <p class="kicker">Mechanics</p>
     <h2>Buy back. Burn. Repeat.</h2>
     <p>A <b>1% trading fee</b> buys back and burns $MOONCAT.</p>
-    <a class="stats-cta" href="https://dexscreener.com/robinhood/0x9d86a5d3a113fc3b1c12efd45696887c5beb8f134516b6d95a47eaa6a462d553" target="_blank" rel="noopener">
-      📊 Live chart &amp; stats
-      <span class="sc-sub">View on DexScreener ↗</span>
-    </a>
+    <div class="live-stats" id="live-stats">
+      <div class="ls-head">
+        <div class="ls-price-wrap">
+          <span class="ls-price" id="ls-price">$—</span>
+          <span class="ls-chg" id="ls-chg"></span>
+        </div>
+        <span class="ls-live"><span class="ls-dot"></span>Live</span>
+      </div>
+      <div class="ls-grid">
+        <div class="ls-tile"><span class="ls-lbl">Market Cap</span><span class="ls-val" id="ls-mcap">—</span></div>
+        <div class="ls-tile"><span class="ls-lbl">Volume 24h</span><span class="ls-val" id="ls-vol">—</span></div>
+        <div class="ls-tile"><span class="ls-lbl">Liquidity</span><span class="ls-val" id="ls-liq">—</span></div>
+      </div>
+      <div class="ls-foot">
+        <span class="ll-badge">🔒 Liquidity Locked</span>
+        <a class="ls-more" href="https://dexscreener.com/robinhood/0x9d86a5d3a113fc3b1c12efd45696887c5beb8f134516b6d95a47eaa6a462d553" target="_blank" rel="noopener">Full chart on DexScreener ↗</a>
+      </div>
+    </div>
   </section>
 
   <!-- challenge -->
@@ -283,5 +313,28 @@
       const io=new IntersectionObserver(es=>{es.forEach(x=>{ if(x.isIntersecting){ run(); io.disconnect(); } });},{threshold:.45});
       io.observe(el);
     } else run();
+  })();
+
+  /* live token stats from DexScreener (works on the hosted site; blocked in sandboxed preview) */
+  (function(){
+    const box=document.getElementById('live-stats'); if(!box) return;
+    const API='https://api.dexscreener.com/latest/dex/pairs/robinhood/0x9d86a5d3a113fc3b1c12efd45696887c5beb8f134516b6d95a47eaa6a462d553';
+    const $=id=>document.getElementById(id);
+    const compact=n=>{n=+n; if(!isFinite(n))return '—'; if(n>=1e6)return '$'+(n/1e6).toFixed(2)+'M'; if(n>=1e3)return '$'+(n/1e3).toFixed(1)+'K'; return '$'+n.toFixed(0);};
+    const price=n=>{n=+n; if(!isFinite(n))return '$—'; return n>=1 ? '$'+n.toFixed(4) : '$'+n.toPrecision(3);};
+    async function load(){
+      try{
+        const r=await fetch(API,{cache:'no-store'}); const d=await r.json();
+        const p=(d.pairs&&d.pairs[0])||d.pair; if(!p) throw 0;
+        $('ls-price').textContent=price(p.priceUsd);
+        const c=p.priceChange&&p.priceChange.h24, ce=$('ls-chg');
+        if(c!=null){ ce.textContent=(c>=0?'+':'')+(+c).toFixed(1)+'%'; ce.className='ls-chg '+(c>=0?'up':'down'); }
+        $('ls-mcap').textContent=compact(p.marketCap||p.fdv);
+        $('ls-vol').textContent=compact(p.volume&&p.volume.h24);
+        $('ls-liq').textContent=compact(p.liquidity&&p.liquidity.usd);
+        box.classList.remove('ls-failed');
+      }catch(e){ box.classList.add('ls-failed'); }
+    }
+    load(); setInterval(load,45000);
   })();
 </script>
