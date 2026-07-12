@@ -88,6 +88,10 @@
   }
   .burn-flame{font-size:.42em;vertical-align:.22em;margin-right:.12em;text-shadow:none}
   .burn-label{display:block;margin-top:18px;font-size:12px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-2)}
+  /* live-stats CTA (shown instead of the burn counter until more is burned) */
+  .stats-cta{display:block;margin:32px auto 0;max-width:420px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;text-align:center;box-shadow:var(--shadow);text-decoration:none;color:var(--ink);font-size:18px;font-weight:700;transition:transform .12s ease}
+  .stats-cta:active{transform:scale(.98)}
+  .stats-cta .sc-sub{display:block;margin-top:6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--neon-ink)}
 
   /* challenge */
   .challenge-img{display:block;width:100%;height:auto;border-radius:14px;border:1px solid var(--line);margin:22px 0;box-shadow:var(--shadow)}
@@ -159,10 +163,10 @@
     <p class="kicker">Mechanics</p>
     <h2>Buy back. Burn. Repeat.</h2>
     <p>A <b>1% trading fee</b> buys back and burns $MOONCAT.</p>
-    <div class="burn">
-      <span class="burn-num"><span class="burn-flame">🔥</span><span id="burned">1,000,000</span></span>
-      <span class="burn-label">$MOONCAT burned so far</span>
-    </div>
+    <a class="stats-cta" href="https://dexscreener.com/robinhood/0x9d86a5d3a113fc3b1c12efd45696887c5beb8f134516b6d95a47eaa6a462d553" target="_blank" rel="noopener">
+      📊 Live chart &amp; stats
+      <span class="sc-sub">View on DexScreener ↗</span>
+    </a>
   </section>
 
   <!-- challenge -->
