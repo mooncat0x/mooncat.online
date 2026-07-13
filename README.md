@@ -4,11 +4,11 @@
 
 # Moon Cat 🌙🐱
 
-### The first reflection token on Robinhood Chain
+### A deflationary token on Robinhood Chain
 
-**Hold $MOONCAT, earn $MOONCAT** — a slice of every trade is paid to every holder, automatically, on-chain. No staking, no claiming. Your wallet just grows while the cat naps. 😴
+**Buy back. Airdrop. Burn.** — a 1% trading fee buys back $MOONCAT, airdrops it to holders, and burns the rest. Supply only goes down.
 
-[🌐 Website](https://mooncat.online) · [𝕏 Twitter](https://x.com/mooncat0x) · [📈 DexScreener](https://dexscreener.com/robinhood/0x34ED546b3F258357aa5e3AB5d9eF262206707285) · [🔍 Explorer](https://robinhoodchain.blockscout.com/token/0x853587c7952a47C2E2bEEc97E2ba8d51Ca83bEfc) · [📄 Audit](media/Audit.pdf)
+[🌐 Website](https://mooncat.online) · [𝕏 Twitter](https://x.com/mooncat0x) · [📈 DexScreener](https://dexscreener.com/robinhood/0x9d86a5d3a113fc3b1c12efd45696887c5beb8f134516b6d95a47eaa6a462d553) · [🔍 Explorer](https://robinhoodchain.blockscout.com/token/0x4BC437B2dB77b6fa9D9Fe54473D5eAd9f194C631)
 
 </div>
 
@@ -16,56 +16,43 @@
 
 ## 🐾 What is Moon Cat?
 
-SafeMoon made reflections famous: a token that pays you just for holding it. **Moon Cat brings that mechanic to Robinhood Chain — first.** Every trade, 1.5% is split across all holders, proportional to what you hold, the instant the trade settles. No dashboards, no lockups, no gas to claim.
+A memecoin that lives on Robinhood Chain and only knows one direction. Fair-launched on the [Bags app](https://bags.fm) — no presale, no team allocation — and graduated to **Uniswap V4** with liquidity locked.
 
-## 💸 The 5% Tax
+## 🔥 Mechanics
 
-Every trade pays a flat 5%, the same on the way in and the way out:
+Every trade pays a **1% fee**. That fee:
 
-| Slice | Fee | What it does |
-|:--|:--:|:--|
-| 🎁 **Auto Airdrop** | 1.5% | Reflections paid to every holder |
-| 💧 **Liquidity** | 1.5% | Auto-added to the pool — the floor deepens with every trade |
-| ❤️ **Charity** | 1.5% | Sent to a dedicated charity wallet |
-| 🔥 **Burn** | 0.5% | Destroyed forever — supply only goes down |
+| | What happens |
+|:--|:--|
+| 🛒 **Buy back** | The fee market-buys $MOONCAT |
+| 🎁 **Airdrop** | Bought tokens are airdropped to holders |
+| 🔥 **Burn** | The rest is destroyed forever |
 
-> Fees are **hard-capped at 10% in the contract** — no one, including the team, can ever set them higher.
+**10,000,000 $MOONCAT burned so far — 1% of supply.**
 
-## 🪙 Tokenomics
+## 🏆 The MoonCat Challenge
 
-**1,000,000,000 $MOONCAT** — fixed supply, no mint function, ever.
+Turn your cat into a Moon Cat: put a toilet-paper roll on your cat, post it on X with **#MoonCatChallenge**, and win $MOONCAT.
 
-| Allocation | Share |
-|:--|:--:|
-| 🔥 Burned | **50%** |
-| 💧 Liquidity | **30%** |
-| 🏦 Treasury | **20%** |
-
-## 🛡️ $MOONCAT is SAFU
-
-Rules the code enforces, not promises:
-
-- ✅ **Verified source** on Blockscout — read every line yourself
-- ✅ **Liquidity burned** — the pool can never be pulled
-- ✅ **Max buy 1%** of supply — no single trade shocks the chart
-- ✅ **Max wallet 2%** of supply — whales are structurally impossible
-- ✅ **Fee ceiling 10%**, coded in — every change emits a public event
-- ✅ **Independent security review** — [read the audit](media/Audit.pdf)
+| 🥇 1st | 🥈 2nd | 🥉 3rd |
+|:--:|:--:|:--:|
+| 1,000,000 | 500,000 | 250,000 |
 
 ## 🛒 How to Buy
 
 1. **Get ETH on Robinhood Chain** — bridge or withdraw ETH to the network (Chain ID `4663`)
-2. **Open [Uniswap](https://app.uniswap.org/swap?chain=robinhood&outputCurrency=0x853587c7952a47C2E2bEEc97E2ba8d51Ca83bEfc)** with Robinhood Chain selected
-3. **Swap ETH for $MOONCAT** — set slippage to **5–10%** to cover the tax. Reflections start the moment tokens land. 🚀
+2. **Open [Uniswap](https://app.uniswap.org/swap?outputCurrency=0x4BC437B2dB77b6fa9D9Fe54473D5eAd9f194C631&chain=robinhood)** with Robinhood Chain selected
+3. **Swap ETH for $MOONCAT** 🚀
 
 ## 📜 Contract
 
 ```
-0x853587c7952a47C2E2bEEc97E2ba8d51Ca83bEfc
+0x4BC437B2dB77b6fa9D9Fe54473D5eAd9f194C631
 ```
 
 - **Network:** Robinhood Chain (Chain ID 4663)
-- **Symbol:** MOONCAT · **Decimals:** 18 · **Supply:** 1,000,000,000
+- **Symbol:** MOONCAT
+- **Liquidity:** Locked 🔒
 
 ## ⚠️ Disclaimer
 
