@@ -1,0 +1,259 @@
+{
+ "generatedAt": 1783983056,
+ "block": 9040121,
+ "totalHolders": 110,
+ "diamondPaws": 50,
+ "excludedInfra": 2,
+ "holders": [
+  {
+   "address": "0x91f066b724bf57daa49d8238034ec8233d87ba25",
+   "balance": "15600833",
+   "since": 1783888924
+  },
+  {
+   "address": "0xacc664732feb95534f3805f4a377ca01cf4d8c7e",
+   "balance": "15422192",
+   "since": 1783887356
+  },
+  {
+   "address": "0xf4ee89f06388d08aba8e60014f671d7505bf32de",
+   "balance": "13097506",
+   "since": 1783886699
+  },
+  {
+   "address": "0x056c6f1b0167ea08b43cc7c84ba8ba338df25653",
+   "balance": "12827877",
+   "since": 1783890528
+  },
+  {
+   "address": "0x90da4c29d59bb5f021930981ee5d4363d1bfeb8c",
+   "balance": "9794160",
+   "since": 1783882583
+  },
+  {
+   "address": "0xf930deb33e6e269f91a6445a90dff8c83bea1116",
+   "balance": "8217614",
+   "since": 1783823803
+  },
+  {
+   "address": "0xfd3b7c18f7e2b7e9bebb30e4464b126a12514b4b",
+   "balance": "3675678",
+   "since": 1783888288
+  },
+  {
+   "address": "0xc3168fcd93415c33490e22bbb9ad0a6181c42348",
+   "balance": "3415722",
+   "since": 1783936525
+  },
+  {
+   "address": "0xba6cd9d56da3b9b6dd9ab875ae998d5b437f4f36",
+   "balance": "2407080",
+   "since": 1783980075
+  },
+  {
+   "address": "0x6195fcee1bb1e7ef3d8645dd47d22a0eb893ebd7",
+   "balance": "1945629",
+   "since": 1783883044
+  },
+  {
+   "address": "0xce5b85c11047d74e63108e448ba7df5b188f3bad",
+   "balance": "1337028",
+   "since": 1783884926
+  },
+  {
+   "address": "0x0006d09df7b0e8dce98463b95439475fcec29111",
+   "balance": "1299983",
+   "since": 1783884926
+  },
+  {
+   "address": "0x000ae1e2ba3624208300605d7919d6c4803c6111",
+   "balance": "1295784",
+   "since": 1783884926
+  },
+  {
+   "address": "0x00077705952c90b728c6d7dc450beb4429331111",
+   "balance": "1285994",
+   "since": 1783884926
+  },
+  {
+   "address": "0x45004af18692aac16840c807d8980ad215d58dad",
+   "balance": "1283402",
+   "since": 1783884926
+  },
+  {
+   "address": "0x00034187c8d0d887821587573586f75624c5e111",
+   "balance": "1270851",
+   "since": 1783884926
+  },
+  {
+   "address": "0x0d8d6c105629e472691f9a970a6f70899195b5e0",
+   "balance": "1246441",
+   "since": 1783884926
+  },
+  {
+   "address": "0x7a236324529091958a323af124b1af694319f385",
+   "balance": "1188898",
+   "since": 1783902438
+  },
+  {
+   "address": "0xd66549fcb800b55c4ec258ca73bb866f7c1bd0d6",
+   "balance": "365136",
+   "since": 1783880098
+  },
+  {
+   "address": "0x574793c29e7013b985dfccf0e3639456769c8108",
+   "balance": "364120",
+   "since": 1783880099
+  },
+  {
+   "address": "0x79d49facb93174e49a474cd70205ebc87d36c221",
+   "balance": "363073",
+   "since": 1783880099
+  },
+  {
+   "address": "0x837cdc49ae018e632e96a6260e4d0cff6afa3b98",
+   "balance": "301546",
+   "since": 1783885531
+  },
+  {
+   "address": "0x715df793b31a7b99abd2120554341eaa1d4e2b32",
+   "balance": "289070",
+   "since": 1783972055
+  },
+  {
+   "address": "0x80993adfab4ef59586be08ca04295caee59df3ba",
+   "balance": "193959",
+   "since": 1783889249
+  },
+  {
+   "address": "0xc0deb02f1e1c14cadff0558a86f76a828267c017",
+   "balance": "125889",
+   "since": 1783883095
+  },
+  {
+   "address": "0x45268093c018008d0166c1bcf54ff9031c829236",
+   "balance": "101768",
+   "since": 1783895493
+  },
+  {
+   "address": "0xe33194e8e1ab409f3f04dec8177c04de0da7a403",
+   "balance": "94969",
+   "since": 1783893223
+  },
+  {
+   "address": "0xc1c443237909560dff49cacc5a5f91ebaf290164",
+   "balance": "65630",
+   "since": 1783909875
+  },
+  {
+   "address": "0x7360795beaa4b951fcae966489a1f98867df1509",
+   "balance": "50274",
+   "since": 1783924187
+  },
+  {
+   "address": "0xf3792d9808c19638155a1cc6072cdaa8ee25f0ac",
+   "balance": "34251",
+   "since": 1783960131
+  },
+  {
+   "address": "0x8a59c8fd30abdcca3bb31f2bcf662376137cf3b4",
+   "balance": "30970",
+   "since": 1783921841
+  },
+  {
+   "address": "0x876d9e9f799fcdf3229fe8434a9e956f61bb23ed",
+   "balance": "30559",
+   "since": 1783884023
+  },
+  {
+   "address": "0xe2321159e262a360787da90600fc0ed969e5d57d",
+   "balance": "28407",
+   "since": 1783938927
+  },
+  {
+   "address": "0x8b147c4db4e2616c0bacfb29f5c61589bc0de4dc",
+   "balance": "17041",
+   "since": 1783915611
+  },
+  {
+   "address": "0xedc6531b10297788cbb0fcfaee904a3803d3e2e4",
+   "balance": "16925",
+   "since": 1783885110
+  },
+  {
+   "address": "0xd5a67c91b2a3e9466e9dbc14f7e69f49049dbeaf",
+   "balance": "15180",
+   "since": 1783942887
+  },
+  {
+   "address": "0x8a5c6e4dfe1bb3a28b297d7b0ab0dcaa59743389",
+   "balance": "9975",
+   "since": 1783892895
+  },
+  {
+   "address": "0x308c2e1875067479c8080ac3f4e68139ea55e8cd",
+   "balance": "9840",
+   "since": 1783915241
+  },
+  {
+   "address": "0xf5c4f3dc02c3fb9279495a8fef7b0741da956157",
+   "balance": "2964",
+   "since": 1783885245
+  },
+  {
+   "address": "0x4344235250833a30288d4247a09561df1462107b",
+   "balance": "1744",
+   "since": 1783893014
+  },
+  {
+   "address": "0x2164f68597fbba66eb1cd40e768c49ee420672b7",
+   "balance": "1000",
+   "since": 1783889859
+  },
+  {
+   "address": "0xa72bdb341ab13b9a14d67eac63925095752e09a0",
+   "balance": "949",
+   "since": 1783888773
+  },
+  {
+   "address": "0xb763c2083322e383f8e558b2df7f8907349322e9",
+   "balance": "589",
+   "since": 1783882049
+  },
+  {
+   "address": "0xecac5aeb95b723402bc5e5d2220f59fd875c6c2c",
+   "balance": "550",
+   "since": 1783957502
+  },
+  {
+   "address": "0xcc47552bf536abf68f765cd03ceda34c91f3aecc",
+   "balance": "404",
+   "since": 1783887244
+  },
+  {
+   "address": "0xcd6b980029e6e6e0733ac8ec3e02be9410d09799",
+   "balance": "232",
+   "since": 1783969064
+  },
+  {
+   "address": "0xe8d5107ef6a357f6e9a359111d1e9a7854e447d7",
+   "balance": "81",
+   "since": 1783929104
+  },
+  {
+   "address": "0x45fe8ecaaee4f6b2cc2f65ac7427df5e7dc12506",
+   "balance": "55",
+   "since": 1783883309
+  },
+  {
+   "address": "0xfeeac21c90b9291209f5f0fdc271aef3feef303d",
+   "balance": "11",
+   "since": 1783893014
+  },
+  {
+   "address": "0xfd390adabdd6555438a358e8279be0c4ddb14e3a",
+   "balance": "8",
+   "since": 1783883575
+  }
+ ]
+}
