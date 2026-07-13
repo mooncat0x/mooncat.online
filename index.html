@@ -132,10 +132,15 @@
 
   /* diamond paws */
   .paws-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px 22px 16px;box-shadow:var(--shadow);margin-top:24px}
-  .paws-list{list-style:none;margin:0;padding:0;counter-reset:paw}
-  .paws-list li{counter-increment:paw;display:flex;align-items:baseline;gap:14px;padding:13px 2px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  .paws-q{display:block;width:100%;margin:14px 0 4px;padding:11px 16px;font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;outline:none;transition:border-color .15s ease}
+  .paws-q:focus{border-color:var(--neon-ink)}
+  .paws-q::placeholder{color:var(--ink-2);opacity:.7}
+  .paws-scroll{max-height:432px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+  .paws-list{list-style:none;margin:0;padding:0}
+  .paws-list li{display:flex;align-items:baseline;gap:14px;padding:13px 2px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
   .paws-list li:last-child{border-bottom:0}
-  .paws-list li::before{content:counter(paw,decimal-leading-zero);font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12px;font-weight:700;color:var(--ink-2);min-width:24px}
+  .paw-rank{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:12px;font-weight:700;color:var(--ink-2);min-width:24px}
+  .paws-empty{padding:18px 2px;margin:0;font-size:14px;color:var(--ink-2);text-align:center}
   .paw-addr{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:14px;font-weight:600;text-decoration:none;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .paw-addr:hover{color:var(--neon-ink)}
   .paw-bal{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:14px;font-weight:700;white-space:nowrap}
@@ -255,9 +260,13 @@
   <section id="paws">
     <p class="kicker">Buy &middot; Hold &middot; Moon</p>
     <h2>Diamond Paws</h2>
-    <p>Wallets that have never sent a single token out. <b>Tokens leave your wallet, you leave the list. Forever.</b></p>
+    <p>The wallets holding strong &mdash; not a single token out since their first buy. <b>Keep holding, keep your spot.</b></p>
     <div class="paws-card">
-      <ol class="paws-list" id="paws-list"></ol>
+      <input class="paws-q mono" id="paws-q" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="Find your wallet &mdash; paste 0x&hellip;" aria-label="Search wallet address">
+      <div class="paws-scroll">
+        <ol class="paws-list" id="paws-list"></ol>
+        <p class="paws-empty" id="paws-empty" hidden>Not on the list yet &mdash; grab some $MOONCAT and hold. 🐾</p>
+      </div>
       <div class="paws-foot">
         <span id="paws-count" class="muted"></span>
         <span class="paws-legend">🐱 &lt;7d &nbsp; 🌙 7d+ &nbsp; 💎 30d+</span>
@@ -420,12 +429,14 @@
     var list = document.getElementById('paws-list'); if (!list) return;
     fetch('holders.json').then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
       var now = Date.now()/1000;
-      d.holders.slice(0,10).forEach(function(h){
+      d.holders.forEach(function(h, i){
         var days = Math.floor((now - h.since)/86400);
         var badge = days >= 30 ? '💎' : days >= 7 ? '🌙' : '🐱';
         var li = document.createElement('li');
+        li.dataset.addr = h.address;
         var short = h.address.slice(0,6) + '…' + h.address.slice(-4);
-        li.innerHTML = '<a class="paw-addr" target="_blank" rel="noopener"></a>'
+        li.innerHTML = '<span class="paw-rank">' + String(i+1).padStart(2,'0') + '</span>'
+          + '<a class="paw-addr" target="_blank" rel="noopener"></a>'
           + '<span class="paw-days">' + badge + ' ' + days + 'd</span>'
           + '<span class="paw-bal">' + Number(h.balance).toLocaleString() + '</span>';
         var a = li.querySelector('a');
@@ -435,6 +446,16 @@
       });
       document.getElementById('paws-count').textContent =
         d.diamondPaws + ' diamond paws of ' + d.totalHolders + ' holders';
+      var q = document.getElementById('paws-q'), empty = document.getElementById('paws-empty');
+      q.addEventListener('input', function(){
+        var v = q.value.trim().toLowerCase(), hits = 0;
+        list.querySelectorAll('li').forEach(function(li){
+          var show = !v || li.dataset.addr.indexOf(v) !== -1;
+          li.style.display = show ? '' : 'none';
+          if (show) hits++;
+        });
+        empty.hidden = hits > 0 || !v;
+      });
     }).catch(function(){
       document.getElementById('paws').style.display = 'none';
     });
