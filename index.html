@@ -429,10 +429,12 @@
     els.forEach(function(el){ el.classList.add('reveal'); io.observe(el); });
   })();
 
-  // diamond paws leaderboard (holders.json is rebuilt daily by GitHub Actions)
-  (function(){
+  // diamond paws leaderboard — computed LIVE in the browser from chain RPC
+  // (walks every Transfer log; falls back to the committed holders.json)
+  (async function(){
     var list = document.getElementById('paws-list'); if (!list) return;
-    fetch('holders.json').then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(d){
+
+    function render(d, live){
       var now = Date.now()/1000;
       d.holders.forEach(function(h, i){
         var days = Math.floor((now - h.since)/86400);
@@ -450,7 +452,7 @@
         list.appendChild(li);
       });
       document.getElementById('paws-count').textContent =
-        d.diamondPaws + ' diamond paws of ' + d.totalHolders + ' holders';
+        d.diamondPaws + ' diamond paws of ' + d.totalHolders + ' holders' + (live ? ' · ⛓ live' : '');
       var q = document.getElementById('paws-q'), empty = document.getElementById('paws-empty');
       q.addEventListener('input', function(){
         var v = q.value.trim().toLowerCase(), hits = 0;
@@ -461,8 +463,64 @@
         });
         empty.hidden = hits > 0 || !v;
       });
-    }).catch(function(){
-      document.getElementById('paws').style.display = 'none';
-    });
+    }
+
+    var RPC = 'https://rpc.mainnet.chain.robinhood.com';
+    var TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
+    var FROM = '0x' + (7439088).toString(16);   // token creation block
+    var ZERO = '0x' + '0'.repeat(40);
+    var DEAD = '0x000000000000000000000000000000000000dead';
+    var CAP = 1000000000n * 10n ** 18n / 20n;   // ≥5% of supply = infrastructure
+    var rid = 0;
+
+    async function rpc(calls){
+      var batch = Array.isArray(calls);
+      var body = (batch ? calls : [calls]).map(function(c){ return {jsonrpc:'2.0', id:++rid, method:c.method, params:c.params}; });
+      var res = await fetch(RPC, {method:'POST', headers:{'content-type':'application/json'}, body: JSON.stringify(batch ? body : body[0])});
+      var json = await res.json();
+      var arr = batch ? json : [json];
+      arr.forEach(function(r){ if (r.error) throw new Error(r.error.message); });
+      var byId = {}; arr.forEach(function(r){ byId[r.id] = r.result; });
+      var out = body.map(function(b){ return byId[b.id]; });
+      return batch ? out : out[0];
+    }
+
+    async function liveIndex(){
+      var logs = await rpc({method:'eth_getLogs', params:[{address: CONTRACT_ADDRESS, topics:[TOPIC], fromBlock: FROM, toBlock:'latest'}]});
+      var addr = function(t){ return '0x' + t.slice(26); };
+      var w = {};
+      var get = function(a){ return w[a] || (w[a] = {bal:0n, out:0, first:0}); };
+      logs.forEach(function(l){
+        var f = addr(l.topics[1]), t = addr(l.topics[2]), v = BigInt(l.data), bn = parseInt(l.blockNumber,16);
+        if (f !== ZERO){ var fw = get(f); fw.bal -= v; fw.out++; }
+        var tw = get(t); tw.bal += v; if (!tw.first) tw.first = bn;
+      });
+      var token = CONTRACT_ADDRESS.toLowerCase();
+      var cands = Object.keys(w).map(function(a){ return {address:a, bal:w[a].bal, out:w[a].out, first:w[a].first}; })
+        .filter(function(h){ return h.address !== ZERO && h.address !== DEAD && h.address !== token && h.out === 0 && h.bal > 0n && h.bal < CAP; });
+      var codes = await rpc(cands.map(function(h){ return {method:'eth_getCode', params:[h.address,'latest']}; }));
+      cands = cands.filter(function(_, i){ return codes[i] === '0x'; });
+      var blocks = Array.from(new Set(cands.map(function(h){ return h.first; })));
+      var stamps = await rpc(blocks.map(function(b){ return {method:'eth_getBlockByNumber', params:['0x'+b.toString(16), false]}; }));
+      var ts = {}; blocks.forEach(function(b, i){ ts[b] = parseInt(stamps[i].timestamp,16); });
+      cands.sort(function(a,b){ return b.bal > a.bal ? 1 : b.bal < a.bal ? -1 : 0; });
+      var total = Object.keys(w).filter(function(a){ return w[a].bal > 0n; }).length;
+      return {
+        totalHolders: total,
+        diamondPaws: cands.length,
+        holders: cands.map(function(h){ return {address:h.address, balance:(h.bal / 10n**18n).toString(), since:ts[h.first]}; })
+      };
+    }
+
+    try {
+      render(await liveIndex(), true);
+    } catch(e) {
+      try {
+        var r = await fetch('holders.json'); if (!r.ok) throw 0;
+        render(await r.json(), false);
+      } catch(e2) {
+        document.getElementById('paws').style.display = 'none';
+      }
+    }
   })();
 </script>
